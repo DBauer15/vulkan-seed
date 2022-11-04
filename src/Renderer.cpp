@@ -149,7 +149,8 @@ void Renderer::initializeAPI(xwin::Window& window)
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
         VK_KHR_WIN32_SURFACE_EXTENSION_NAME
 #elif defined(VK_USE_PLATFORM_MACOS_MVK)
-        VK_MVK_MACOS_SURFACE_EXTENSION_NAME
+        VK_MVK_MACOS_SURFACE_EXTENSION_NAME,
+        VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME
 #elif defined(VK_USE_PLATFORM_XCB_KHR)
         VK_KHR_XCB_SURFACE_EXTENSION_NAME
 #elif defined(VK_USE_PLATFORM_ANDROID_KHR)
@@ -195,7 +196,7 @@ void Renderer::initializeAPI(xwin::Window& window)
                .apiVersion = VK_API_VERSION_1_2};
 
     vk::InstanceCreateInfo info(
-        vk::InstanceCreateFlags(), &appInfo,
+        vk::InstanceCreateFlags(VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR), &appInfo,
         static_cast<uint32_t>(layers.size()), layers.data(),
         static_cast<uint32_t>(extensions.size()), extensions.data());
 
